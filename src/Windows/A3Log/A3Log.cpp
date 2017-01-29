@@ -10,15 +10,15 @@
 	Attribution-NonCommercial-ShareAlike 3.0
 
 	You are free to:
-	Share — copy and redistribute the material in any medium or format
-	Adapt — remix, transform, and build upon the material
+	Share ï¿½ copy and redistribute the material in any medium or format
+	Adapt ï¿½ remix, transform, and build upon the material
 	The licensor cannot revoke these freedoms as long as you follow the license terms.
 
 	Under the following terms:
-	Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
-	NonCommercial — You may not use the material for commercial purposes.
-	ShareAlike — If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.
-	No additional restrictions — You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
+	Attribution ï¿½ You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
+	NonCommercial ï¿½ You may not use the material for commercial purposes.
+	ShareAlike ï¿½ If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.
+	No additional restrictions ï¿½ You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
 
 	http://creativecommons.org/licenses/by-nc-sa/3.0/
 */
@@ -26,14 +26,14 @@
 #include "INIReader.h"
 #include <Windows.h>
 #include <cstdio>
-#include <string> 
+#include <string>
 #include <ctime>
 #include <fstream>
 #include <sstream>
 #include <map>
 #include <memory>
 #include <thread>
-#include <mutex> 
+#include <mutex>
 #include <queue>
 #include <condition_variable>
 #include <iostream>
@@ -110,7 +110,6 @@ void loadConfig()
 		safeload = false;
 		std::ofstream writefileError("A3Log-Error.log", std::ios_base::app | std::ios_base::out);
 		writefileError << "[A3Log] :: [Error] Could not find A3Log.ini file! Make sure the file exists and that it is placed withing the arma3server root directory, or the place where the dll is placed too!" << std::endl;
-		writefileError.flush();
 		writefileError.close();
 	}
 
@@ -121,7 +120,6 @@ void loadConfig()
 			std::ofstream writefileError("A3Log-Error.log", std::ios_base::app | std::ios_base::out);
 			writefileError << "[A3Log] :: [Error] Could not parse A3Log.ini file! Make sure the file exists and it is in the same folder as the dll or in the arma3server root directory, and if there are any syntax errors in the A3Log.ini!" << std::endl;
 			writefileError << "[A3Log] :: [Error] in line: " << reader.ParseError() << std::endl;
-			writefileError.flush();
 			writefileError.close();
 		}
 		else {
@@ -187,7 +185,7 @@ void loadConfig()
 					} else {
 						extendetFolderName = folderName + "/" + reader.Get(logType, "FileName", "A3Log");
 					}
-					
+
 					CreateDirectoryA(extendetFolderName.c_str(), NULL);
 				}
 				else {
@@ -291,8 +289,6 @@ void logAction(std::string input) {
 					std::cout << input.substr(pos + 1, input.size()) << std::endl;
 				}
 			}
-
-			(*stream).flush();
 		}
 		else {
 
@@ -313,7 +309,6 @@ void logAction(std::string input) {
 				else {
 					writefileError << "Note: You are have got UseCustomLogsOnly enabled but this message has no category (please fix): " << "[" << logName << "] " << input.substr(pos + 1, input.size()) << std::endl;
 				}
-				writefileError.flush();
 				writefileError.close();
 			}
 			else {
@@ -343,8 +338,6 @@ void logAction(std::string input) {
 							std::cout << fileNameForDebug << ": " << "[" << logName << "] " << input.substr(pos + 1, input.size()) << std::endl;
 						}
 					}
-
-					(*stream).flush();
 				}
 			}
 		}
@@ -367,7 +360,6 @@ void logAction(std::string input) {
 			else {
 				writefileError << "Note: You are have got UseCustomLogsOnly enabled but this message has no category (please fix): " << input.substr(pos + 1, input.size()) << std::endl;
 			}
-			writefileError.flush();
 			writefileError.close();
 		}
 		else {
@@ -397,8 +389,6 @@ void logAction(std::string input) {
 						std::cout << fileNameForDebug << ": " << input.substr(pos + 1, input.size()) << std::endl;
 					}
 				}
-
-				(*stream).flush();
 			}
 		}
 	}

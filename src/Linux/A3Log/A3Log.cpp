@@ -161,7 +161,6 @@ void loadConfig()
 		safeload = false;
 		std::ofstream writefileError("A3Log-Error.log", std::ios_base::app | std::ios_base::out);
 		writefileError << "[A3Log] :: [Error] Could not find A3Log.ini file! Make sure the file exists and that it is placed withing the arma3server root directory, or the place where the dll is placed too!" << std::endl;
-		writefileError.flush();
 		writefileError.close();
 	}
 
@@ -172,7 +171,6 @@ void loadConfig()
 			std::ofstream writefileError("A3Log-Error.log", std::ios_base::app | std::ios_base::out);
 			writefileError << "[A3Log] :: [Error] Could not parse A3Log.ini file! Make sure the file exists and it is in the same folder as the dll or in the arma3server root directory, and if there are any syntax errors in the A3Log.ini!" << std::endl;
 			writefileError << "[A3Log] :: [Error] in line: " << reader.ParseError() << std::endl;
-			writefileError.flush();
 			writefileError.close();
 		} else {
 			if (reader.GetBoolean("Settings", "UseCustomDirectory", false))
@@ -332,8 +330,7 @@ void logAction(std::string input) {
 			else {
 				(*stream) << input.substr(pos + 1, input.size()) << std::endl;
 			}
-			
-			(*stream).flush();
+
 		} else {
 
 			if (customlogsonly)
@@ -353,7 +350,6 @@ void logAction(std::string input) {
 				else {
 					writefileError << "Note: You are have got UseCustomLogsOnly enabled but this message has no category (please fix): " << "[" << logName << "] " << input.substr(pos + 1, input.size()) << std::endl;
 				}
-				writefileError.flush();
 				writefileError.close();
 			} else {
 				std::shared_ptr<std::ostream> stream = logMap["settings"];
@@ -374,7 +370,6 @@ void logAction(std::string input) {
 						(*stream) << "[" << logName << "] " << input.substr(pos + 1, input.size()) << std::endl;
 					}
 
-					(*stream).flush();
 				}
 			}
 		}
@@ -397,7 +392,6 @@ void logAction(std::string input) {
 			else {
 				writefileError << "Note: You are have got UseCustomLogsOnly enabled but this message has no category (please fix): " << input.substr(pos + 1, input.size()) << std::endl;
 			}
-			writefileError.flush();
 			writefileError.close();
 		} else {
 			std::shared_ptr<std::ostream> stream = logMap["settings"];
@@ -417,8 +411,6 @@ void logAction(std::string input) {
 				else {
 					(*stream) << input.substr(pos + 1, input.size()) << std::endl;
 				}
-
-				(*stream).flush();
 			}
 		}
 	}
