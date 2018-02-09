@@ -24,7 +24,7 @@
  * Extension configuration
  */
 #define _EXTENSION_NAME    "A3LOG"
-#define _EXTENSION_VERSION "1.0"
+#define _EXTENSION_VERSION "1.8"
 
 /**
  * Define the maximum amount of threads that will be created
