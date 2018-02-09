@@ -127,7 +127,7 @@ CStartParameterHandler::GetCommandLineA()
 
     sprintf( pstrPath, "/proc/%ld/cmdline", ( long ) getpid() );
 
-	oFile = fopen( pstrPath, "r" );
+    oFile = fopen( pstrPath, "r" );
 
     delete pstrPath;
 

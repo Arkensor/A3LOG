@@ -11,9 +11,9 @@
     Copyright © 2018
     Paul L. (https://github.com/Arkensor)
     All rights reserved!
-	
-	Based on A3EXT (https://github.com/Arkensor/A3EXT) by
-	Paul L. (https://github.com/Arkensor)
+    
+    Based on A3EXT (https://github.com/Arkensor/A3EXT) by
+    Paul L. (https://github.com/Arkensor)
     Ollie W. (https://github.com/BoGuu)
 
 \**********************************************************************************************************************/
@@ -46,8 +46,8 @@ for "_i" from 1 to g_nCallingThreads do
         for "_i" from 1 to g_nCallsEach do
         {
             private _result = [ "this is some sample data ..." ] call A3LOG_fnc_log;
-			[ "this is some sample data ...", "RotatedExampleLog", "debug" ] call A3LOG_fnc_log;
-			[ "this is some sample data ...", "CreationTimestampLog" ] call A3LOG_fnc_log;
+            [ "this is some sample data ...", "RotatedExampleLog", "debug" ] call A3LOG_fnc_log;
+            [ "this is some sample data ...", "CreationTimestampLog" ] call A3LOG_fnc_log;
             g_oResults pushBack _result;
         };
     };

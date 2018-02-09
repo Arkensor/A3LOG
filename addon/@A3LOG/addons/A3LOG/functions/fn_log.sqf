@@ -11,9 +11,9 @@
     Copyright © 2018
     Paul L. (https://github.com/Arkensor)
     All rights reserved!
-	
-	Based on A3EXT (https://github.com/Arkensor/A3EXT) by
-	Paul L. (https://github.com/Arkensor)
+    
+    Based on A3EXT (https://github.com/Arkensor/A3EXT) by
+    Paul L. (https://github.com/Arkensor)
     Ollie W. (https://github.com/BoGuu)
 
 \**********************************************************************************************************************/
@@ -21,8 +21,8 @@
 params
 [
     [ "_data", "", [ "" ] ],
-	[ "_category", "", [ "" ] ],
-	[ "_level", "", [ "" ] ]
+    [ "_category", "", [ "" ] ],
+    [ "_level", "", [ "" ] ]
 ];
 
 if( _data isEqualTo "" ) exitWith { false; };
