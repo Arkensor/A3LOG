@@ -19,6 +19,7 @@
 \**********************************************************************************************************************/
 
 diag_log "A3LOG - Benchmark started ...";
+[ "A3LOG - Benchmark started ..." ] call A3LOG_fnc_log;
 
 g_nCallingThreads = 1000; //Simulating n requests from different sources like remoteexec on your server which all run in parallel
 g_nCallsEach = 10; //How many calls does each of the threads do for the simulation
@@ -46,8 +47,10 @@ for "_i" from 1 to g_nCallingThreads do
         for "_i" from 1 to g_nCallsEach do
         {
             private _result = [ "this is some sample data ..." ] call A3LOG_fnc_log;
-            [ "this is some sample data ...", "RotatedExampleLog", "debug" ] call A3LOG_fnc_log;
-            [ "this is some sample data ...", "CreationTimestampLog" ] call A3LOG_fnc_log;
+            [ "this is some sample data for the minimal config log ...", "MinimalConfigExample" ] call A3LOG_fnc_log;
+            [ "this is some sample data for the rotated log file...", "RotatedExampleLog" ] call A3LOG_fnc_log;
+            [ "this is some sample data for the creation timestamp log...", "CreationTimestampLog" ] call A3LOG_fnc_log;
+            [ "this is some sample data for the custom formatted log with a loglevel...", "CustomFormattingAndCustomPattern", "error" ] call A3LOG_fnc_log;
             g_oResults pushBack _result;
         };
     };

@@ -69,7 +69,7 @@ CExtensionBase::Setup()
 
         if( strSectionLower != "settings" )
         {
-            std::string strFileName = m_poConfiguration->Get( oSection, "FileName", "" );
+            std::string strFileName = m_poConfiguration->Get( oSection, "FileName", oSection );
 
             if( !strFileName.empty() )
             {
@@ -106,13 +106,28 @@ CExtensionBase::Setup()
 
                 strFullLogPath += std::experimental::filesystem::path( strFileName ).extension().string();
 
-                std::experimental::filesystem::create_directories( std::experimental::filesystem::path( strFullLogPath ).parent_path() );
+                try
+                {
+                    if( !std::experimental::filesystem::is_directory( std::experimental::filesystem::path( strFullLogPath ).parent_path() ) )
+                    {
+                        if( !std::experimental::filesystem::create_directories( std::experimental::filesystem::path( strFullLogPath ).parent_path() ) )
+                        {
+                            throw std::exception();
+                        }
+                    }
+                }
+                catch ( ... )
+                {
+                    throw std::exception( fmt::format( "Could not create log directory for {0}: {1}", oSection, strFullLogPath ).c_str() );
+                }
 
                 auto oFileLogger = spdlog::basic_logger_mt( strSectionLower, strFullLogPath );
 
                 oFileLogger->set_level( parseLogLevel( strLogLevel ) );
 
                 oFileLogger->set_pattern( strPattern );
+
+                oFileLogger->flush_on( loglevel::trace );
             }
         }
     }

@@ -43,7 +43,7 @@ class CfgFunctions
         
         class Benchmark
         {
-            file = "\A3LOG"
+            file = "\A3LOG";
             class benchmark { postInit = 1; headerType = -1; };
         };
     };

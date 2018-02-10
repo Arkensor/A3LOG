@@ -61,12 +61,15 @@ CExtensionBase::CExtensionBase( const std::string & rstrName, const std::string 
     freopen_s( &m_oStream, "CONOUT$", "w", stdout );
 
     auto oConsoleLogger = spdlog::stdout_color_mt( "console" );
+
     m_poConsoleLogger.swap( oConsoleLogger );
 
-    //Collect all logs not matter the level for this.
     m_poConsoleLogger->set_level( loglevel::trace );
 
+    m_poConsoleLogger->flush_on( loglevel::trace );
+
     m_poConsoleLogger->set_pattern( "[%Y-%m-%d %H:%M:%S] %v" );
+
 #endif
 
 #ifdef _EXTENSION_USE_DEFAULT_FILE_LOGGER
@@ -81,6 +84,8 @@ CExtensionBase::CExtensionBase( const std::string & rstrName, const std::string 
 
     //Collect all logs not matter the level for this.
     m_poFileLogger->set_level( loglevel::trace );
+
+    m_poFileLogger->flush_on( loglevel::trace );
 
     m_poFileLogger->set_pattern( "[%Y-%m-%d %H:%M:%S] %v" );
 #endif
