@@ -95,10 +95,10 @@ int _EXTENSION_STDCALL RVExtensionArgs( char *output, int outputSize, const char
     }
 
     strncpy( output, std::string(
-            fmt::format( "{0} {1} - A fatal error has occurred, the extension stopped working! Details: {2}",
-                         g_Extension->m_strName,
-                         g_Extension->m_strVersion,
-                         g_Extension->m_strExtensionStateDescription ) ).c_str(), ( size_t ) --outputSize );
+        fmt::format( "{0} {1} - A fatal error has occurred, the extension stopped working! Details: {2}",
+                     g_Extension->m_strName,
+                     g_Extension->m_strVersion,
+                     g_Extension->m_strExtensionStateDescription ) ).c_str(), ( size_t ) --outputSize );
 
     return -1;
 }

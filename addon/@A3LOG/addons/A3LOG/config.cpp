@@ -22,7 +22,7 @@ class CfgPatches
 {
     class A3LOG
     {
-        requiredVersion = 0.1;
+        requiredVersion = 1.67;
         fileName = "A3LOG.pbo";
         author = "Arkensor";
     };
@@ -37,7 +37,6 @@ class CfgFunctions
         class Functions 
         {
             file = "\A3LOG\functions";
-
             class log { headerType = -1; };
         };
         
