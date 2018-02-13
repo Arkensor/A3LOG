@@ -20,24 +20,25 @@
 
 class CfgPatches
 {
-    class A3LOG
+    class A3LOG_Benchmark
     {
         requiredVersion = 1.67;
-        fileName = "A3LOG.pbo";
+		requiredAddons[] = { "A3LOG" };
+        fileName = "A3LOG_Benchmark.pbo";
         author = "Arkensor";
     };
 };
 
 class CfgFunctions
 {
-    class A3LOG
+    class A3LOG_Benchmark
     {
-        tag = "A3LOG";
+        tag = "A3LOG_Benchmark";
 
         class Functions 
         {
-            file = "\A3LOG\functions";
-            class log { headerType = -1; };
+            file = "\A3LOG_Benchmark\functions";
+			class benchmark { postInit = 1; headerType = -1; };
         };
     };
 };
