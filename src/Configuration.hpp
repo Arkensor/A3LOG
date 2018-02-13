@@ -38,13 +38,6 @@
 #define _EXTENSION_USE_CONSOLE_LOGGING
 
 /**
- * Do you want to write log files?
- */
-#define _EXTENSION_USE_FILE_LOGGING
-
-/**
- * @Required: _EXTENSION_USE_FILE_LOGGING
- *
  * Using this provides you with a default log file that you can write to.
  * The default folder for the log files is @<Extensionname>/Logs/
  * The default name for the logfile is <Extensioname>.log
@@ -52,18 +45,11 @@
 //#define _EXTENSION_USE_DEFAULT_FILE_LOGGER
 
 /**
- * Do you want to have access to the start parameters from the arma executable?
- */
-//#define _EXTENSION_USE_START_PARAMETERS
-
-/**
  * Do you want to make use of the ini configuration system?
  */
 #define _EXTENSION_USE_INI_CONFIGURATION
 
 /**
- * @Required: _EXTENSION_USE_INI_CONFIGURATION
- *
  * You may specify the name of the config file
  * that will be searched in the entire arma directory
  * and all subfolders.

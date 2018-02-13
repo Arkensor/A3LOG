@@ -21,6 +21,7 @@
 
 #include "DataTypes.hpp"
 #include "Processor.hpp"
+#include "StartParameterHandler.hpp"
 
 //Required thridparty includes
 #include "ThridParty/spdlog/spdlog.h"
@@ -34,10 +35,6 @@ spdlog::apply_all([&](std::shared_ptr<spdlog::logger> oLogger){oLogger->log( lev
 namespace loglevel = spdlog::level;
 
 //Optional includes
-#ifdef _EXTENSION_USE_START_PARAMETERS
-    #include "StartParameterHandler.hpp"
-#endif
-
 #ifdef _EXTENSION_USE_INI_CONFIGURATION
     #include "ThridParty/inih/INIReader.hpp"
 #endif
@@ -70,7 +67,11 @@ public:
     std::string m_strExtensionStateDescription;
 
 protected:
+    typedef std::experimental::filesystem::recursive_directory_iterator TRecursiveIterator;
+
     std::shared_ptr< A3::Extension::Processor::CProcessor > m_poProcessor;
+
+    std::shared_ptr< A3::Extension::StartParameter::CStartParameterHandler > m_poStartParameterHandler;
 
 #ifdef _EXTENSION_USE_CONSOLE_LOGGING
     FILE *m_oStream;
@@ -81,16 +82,11 @@ protected:
     std::shared_ptr< spdlog::logger > m_poFileLogger;
 #endif
 
-#ifdef _EXTENSION_USE_START_PARAMETERS
-    std::shared_ptr< A3::Extension::StartParameter::CStartParameterHandler > m_poStartParameterHandler;
-#endif
-
 #ifdef _EXTENSION_USE_INI_CONFIGURATION
     std::shared_ptr< INIReader > m_poConfiguration;
 #endif
 
 protected:
-
     void
     Setup();
 
@@ -107,7 +103,7 @@ protected:
     AddWorkloads(const char *pcExtensionFunction, const char **pExtensionData, int nExtensionDataCount);
 
     bool
-    CheckResults( std::vector< A3::Extension::Processor::CProcessorResult > &roResults, A3::DataTypes::uint64 nCurrentSize );
+    CheckResults( std::vector< A3::Extension::Processor::CProcessorResult > & roResults, A3::DataTypes::uint64 nCurrentSize );
 
     A3::DataTypes::TStrVector
     Split( const std::string &rstrData, char cDelimiter );

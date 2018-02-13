@@ -17,11 +17,10 @@
 
 #include "ExtensionBase.hpp"
 
-#include <filesystem>
 #include <sstream>
 
 #ifndef _WINDOWS
-#undef _EXTENSION_USE_CONSOLE_LOGGING
+    #undef _EXTENSION_USE_CONSOLE_LOGGING
 #endif
 
 namespace A3
@@ -37,11 +36,22 @@ CExtensionBase::CExtensionBase( const std::string & rstrName, const std::string 
     , m_nMaxOutputSize( -1 )
     , m_strExecutablePath( std::experimental::filesystem::current_path().string() )
 {
+    //Parse ArmA process parameter
+    auto poParameterHandler = std::make_shared< A3::Extension::StartParameter::CStartParameterHandler >();
+
+    m_poStartParameterHandler.swap( poParameterHandler );
+
+    //Setup mutlithreaded processing
+    auto oProcessor = std::make_shared< A3::Extension::Processor::CProcessor >();
+
+    m_poProcessor.swap( oProcessor );
+
 #ifdef _EXTENSION_USE_CONSOLE_LOGGING
     AllocConsole();
-    std::string strConsoleTitle = m_strName + " " + m_strVersion;
 
     //Set console title
+    std::string strConsoleTitle = m_strName + " " + m_strVersion;
+
     SetConsoleTitle( TEXT( strConsoleTitle.c_str() ) );
 
     //Disable key combinations
@@ -49,9 +59,11 @@ CExtensionBase::CExtensionBase( const std::string & rstrName, const std::string 
 
     //Disable closing button
     HWND oConsoleModule = ::GetConsoleWindow();
+
     if ( oConsoleModule )
     {
         HMENU oMenuModule = ::GetSystemMenu( oConsoleModule, FALSE );
+
         if ( oMenuModule )
         {
             DeleteMenu( oMenuModule, SC_CLOSE, MF_BYCOMMAND );
@@ -90,26 +102,19 @@ CExtensionBase::CExtensionBase( const std::string & rstrName, const std::string 
     m_poFileLogger->set_pattern( "[%Y-%m-%d %H:%M:%S] %v" );
 #endif
 
-#ifdef _EXTENSION_USE_START_PARAMETERS
-    auto poParameterHandler = std::make_shared< A3::Extension::StartParameter::CStartParameterHandler >();
-    m_poStartParameterHandler.swap( poParameterHandler );
-#endif
-
 #ifdef _EXTENSION_USE_INI_CONFIGURATION
 
     std::string strConfigurationPath;
 
     //Find the configuration.ini path in the startup parameters
-#ifdef _EXTENSION_USE_START_PARAMETERS
     std::string strExtensionLower = _EXTENSION_NAME;
     std::transform( strExtensionLower.begin(), strExtensionLower.end(), strExtensionLower.begin(), ::tolower );
     if( m_poStartParameterHandler->m_oStartParamters.count( strExtensionLower ) > 0 )
     {
         strConfigurationPath = m_poStartParameterHandler->m_oStartParamters.at( strExtensionLower );
     }
-#endif
 
-    //Find the configuration file
+    //Find the configuration file in the filesystem
     if( strConfigurationPath.empty() )
     {
         std::string strConfigName;
@@ -121,8 +126,6 @@ CExtensionBase::CExtensionBase( const std::string & rstrName, const std::string 
         strConfigName += ".ini";
 #endif
 
-        typedef std::experimental::filesystem::recursive_directory_iterator TRecursiveIterator;
-
         TRecursiveIterator oEndIt;
 
         for ( TRecursiveIterator oDirIt( std::experimental::filesystem::current_path() ); oDirIt != oEndIt; ++oDirIt )
@@ -130,8 +133,7 @@ CExtensionBase::CExtensionBase( const std::string & rstrName, const std::string 
             const std::experimental::filesystem::path oFile = ( *oDirIt );
 
             if ( !std::experimental::filesystem::is_directory( oFile ) &&
-                 !std::experimental::filesystem::is_socket( oFile )
-                    )
+                 !std::experimental::filesystem::is_socket( oFile ) )
             {
                 if ( oFile.string().substr( oFile.string().size() - strConfigName.size() ) == strConfigName )
                 {
@@ -147,12 +149,9 @@ CExtensionBase::CExtensionBase( const std::string & rstrName, const std::string 
     }
 
     auto oConfigReader = std::make_shared< INIReader >( strConfigurationPath );
+
     m_poConfiguration.swap( oConfigReader );
 #endif
-
-    //Setup mutlithreaded processing
-    auto oProcessor = std::make_shared< A3::Extension::Processor::CProcessor >();
-    m_poProcessor.swap( oProcessor );
 }
 
 CExtensionBase::~CExtensionBase()
@@ -323,11 +322,10 @@ CExtensionBase::SplitResult( std::string strResult, A3::Extension::Processor::CP
     }
 
     //Put in final Result, or the only one in case it was small enough for one anyway
-    oResults.emplace_back( A3::Extension::Processor::CProcessorResult(
-                            roWorkload.m_strID,
-                            strResult,
-                            bIsMultiPart,
-                            ( bIsMultiPart ? 0 : -1 ) ) );
+    oResults.emplace_back( A3::Extension::Processor::CProcessorResult( roWorkload.m_strID,
+                                                                       strResult,
+                                                                       bIsMultiPart,
+                                                                       ( A3::DataTypes::uint64 ) ( bIsMultiPart ? 0 : -1 ) ) );
 
     return oResults;
 }
