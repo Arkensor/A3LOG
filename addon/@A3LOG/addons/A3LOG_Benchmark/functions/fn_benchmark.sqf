@@ -42,7 +42,7 @@ g_oResults = [];
                               ( diag_tickTime - _time ) / ( g_nCallingThreads * g_nCallsEach ) ];
 					 
 	diag_log _result;
-	diag_log g_oResults;
+	diag_log format[ "A3LOG: Return results: %1", g_oResults ];
 	[ _result ] call A3LOG_fnc_log;
 };
 

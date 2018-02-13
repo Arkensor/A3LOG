@@ -25,13 +25,21 @@ params
     [ "_level", "", [ "" ] ]
 ];
 
-if( ( _data isEqualTo "" ) || ( uiNamespace getVariable [ "A3LOG_FAILURE", false ] ) ) exitWith { false; };
+if ( ( _data isEqualTo "" ) || ( uiNamespace getVariable [ "A3LOG_FAILURE", false ] ) ) exitWith
+{
+    false;
+};
 
 private _result = "A3LOG" callExtension [ "LOG", [ format [ "-1%1%2%1%3%1%4", toString [ 29 ], _data, _category, _level] ] ];
 
-if( ( ( _result select 0 ) isEqualTo "[]" ) && ( ( _result select 1 ) isEqualTo 0 ) ) exitWith { true; };
+if ( ( ( _result param [ 0 ] ) isEqualTo "[]" ) &&
+     ( ( _result param [ 1 ] ) isEqualTo 0 ) &&
+     ( ( _result param [ 2 ] ) isEqualTo 0 ) ) exitWith
+{
+    true;
+};
 
-diag_log format[ "A3LOG: %1", ( _result select 0 ) ];
+diag_log format[ "A3LOG: %1", ( _result param [ 0 ] ) ];
 
 with uiNamespace do 
 {
