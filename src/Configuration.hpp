@@ -30,7 +30,7 @@
  * Define the maximum amount of threads that will be created
  * If not defined, there will be a thread for each cpu core
  */
-#define _EXTENSION_MAX_THREADS 4
+//#define _EXTENSION_MAX_THREADS 4
 
 /**
  * Do you want to print something to the console? [Windows only]

@@ -23,14 +23,14 @@ diag_log "A3LOG: Benchmark starting in 5 seconds ...";
 
 uiSleep 5;
 
-g_nCallingThreads = 1000; //Simulating n requests from different sources like remoteexec on your server which all run in parallel
-g_nCallsEach      = 10; //How many calls does each of the threads do for the simulation
+g_nCallingThreads = 254; //Simulating n requests from different sources like remoteexec on your server which all run in parallel
+g_nCallsEach      = 3;   //How many calls does each of the threads do for the simulation
 
 g_oResults = [];
 
 [] spawn
 {
-    _time = diag_tickTime;
+    private _time = diag_tickTime;
 
     waitUntil { ( count g_oResults ) >= ( g_nCallingThreads * g_nCallsEach ) };
 
